@@ -18,9 +18,9 @@ The goals / steps of this project are the following:
 [image3]: ./output_images/pipeline.png "Pipeline"
 
 ---
-###Writeup / README
+### Writeup / README
 
-###Camera Calibration
+### Camera Calibration
 
 This was done in `calibrate.py`.  The results were saved to pickle files to avoid repeating the calculations.
 
@@ -37,7 +37,7 @@ Sample original and undistorted images can be found below.
 
 ---
 
-###Pipeline (single images)
+### Pipeline (single images)
 
 Image processing was done in `process_image.py`. The pipline is in the `process image` method (lines 42-271), which makes use of the `Line` class (lines 13-34) when processing multiple images (i.e., in a video).
 
@@ -66,13 +66,13 @@ The entire pipeline is illustrated in the image below.
 
 ---
 
-###Pipeline (video)
+### Pipeline (video)
 
 Here's a [link to my video result](./project_output.mp4)
 
 ---
 
-###Discussion
+### Discussion
 
 Flaws of my pipeline:
 1. It will fail whenever the distance between lanes is dropping.

@@ -224,12 +224,19 @@ def process_image(img, plot_graphs=False):
     result = cv2.addWeighted(cv2.cvtColor(undist, cv2.COLOR_BGR2RGB), 1, lane_only, 0.3, 0)
 
     # Print text on image
+    # Define conversions in x and y from pixels space to meters
+    ym_per_pix = 30 / 720  # meters per pixel in y dimension
+    xm_per_pix = 3.7 / 700  # meters per pixel in x dimension
     # Calculate the position of the center of the car
-    center_car = (leftx_base + rightx_base)/2
+    center_car = ((leftx_base + rightx_base)/2-midpoint)*xm_per_pix
     # Calculate the radii of curvature
-    left_rad_curve = radius_curvature(left_fit[0], left_fit[1], binary_warped.shape[0])
-    right_rad_curve = radius_curvature(right_fit[0], right_fit[1], binary_warped.shape[0])
-    text = ['Rad curves=' + str(round(left_rad_curve, 1)) + ', ' + str(round(right_rad_curve, 1)), 'Midpt=' + str(round(center_car, 0)), 'num_error=' + str(left_lane_line.num_errors)]
+    # Fit new polynomials to x,y in world space
+    left_fit_cr = np.polyfit(ploty * ym_per_pix, left_fitx * xm_per_pix, 2)
+    right_fit_cr = np.polyfit(ploty * ym_per_pix, right_fitx * xm_per_pix, 2)
+    # Calculate the new radii of curvature
+    left_rad_curve = radius_curvature(left_fit_cr[0], left_fit_cr[1], binary_warped.shape[0]/2*ym_per_pix)
+    right_rad_curve = radius_curvature(right_fit_cr[0], right_fit_cr[1], binary_warped.shape[0]/2*ym_per_pix)
+    text = ['Rad curves=' + str(round(left_rad_curve, 1)) + ', ' + str(round(right_rad_curve, 1)), 'Center=' + str(round(center_car, 1)), 'num_error=' + str(left_lane_line.num_errors)]
     y_text_pos = 0
     for t in text:
         retval, baseline = cv2.getTextSize(t, cv2.FONT_HERSHEY_SIMPLEX, 2, 4)

@@ -57,7 +57,7 @@ The pipeline's steps are as follows:
 #### 3. Plot the lane on the undistorted image (lines 217-224)
 1. This is done by drawing the lane lines on a blank image, inverse transforming it, and superimposing it on the original.
 #### 4. Calculate the radii of curvature of the lane lines and position of the center of the car (lines 226-237)
-1. Units are pixels.  The center of the car is the x-position in the image.
+1. Units are meters.  The center of the car is measured from the center of the image, positive values indicating that the car is right-of-center.
 2. The number of recent consecutive unsuccessful attempts to find lane lines is also plotted.
 
 The entire pipeline is illustrated in the image below.
